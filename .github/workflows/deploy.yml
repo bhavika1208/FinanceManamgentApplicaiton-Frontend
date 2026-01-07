@@ -17,11 +17,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./BankFrontend
 
       - name: Build the React app
         run: npm run build
-        working-directory: ./BankFrontend
         env:
           REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
 
@@ -29,4 +27,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./BankFrontend/build 
+          publish_dir: ./build 
