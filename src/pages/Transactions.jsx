@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiService } from "../services/api";
 
 
@@ -38,17 +38,7 @@ const Transactions = () => {
     }, [])
 
 
-
-    useEffect(() => {
-
-        if (selectedAccount) {
-            fetchTransactions(selectedAccount, 0);
-        }
-
-    }, [selectedAccount]);
-
-
-    const fetchTransactions = async (accountNumber, page) => {
+    const fetchTransactions = useCallback(async (accountNumber, page) => {
 
         setLoading(true);
         setError('');
@@ -73,7 +63,14 @@ const Transactions = () => {
         } finally {
             setLoading(false)
         }
-    }
+    }, [pagination.pageSize])
+
+    useEffect(() => {
+
+        if (selectedAccount) {
+            fetchTransactions(selectedAccount, 0);
+        }
+    }, [selectedAccount, fetchTransactions]);
 
 
     const handleAccountChange = (e) => {
